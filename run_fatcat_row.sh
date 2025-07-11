@@ -16,8 +16,14 @@ protein_name=$(awk -v id="$row_id" '$1 == id {print $2}' "$protein_ids")
 
 echo "running row $row_idx ($protein_name)"
 
-csv_output="${output_base_dir}/csvs/alignment_results.csv"
+csv_output="${output_base_dir}/csvs/alignment_results.csv" #raw score, p value, aln len
+row_csv="${output_base_dir}/csvs/row_${row_id}_duration_memory.csv" #memory and duration
 echo "protein_1,protein2,raw_score,p_value,aln_len" > "$csv_output"
+
+#memory and usage
+row_total_duration=0
+row_max_memory=0
+
 
 
 #loop over all proteins
@@ -48,10 +54,21 @@ for ((j=0; j<${#files[@]}; j++)); do
     cp "${input_dir}/${protein_name}.pdb" "$pdb_file" .
     echo -e "ls BEFORE FATCAT"
     ls
-    FATCAT -p1 "${protein_name}.pdb" -p2 "${pdb_file_extracted}" -o "${prefix}" -m -ac -t
+    #FATCAT -p1 "${protein_name}.pdb" -p2 "${pdb_file_extracted}" -o "${prefix}" -m -ac -t
+    { /usr/bin/time -v FATCAT -p1 "${protein_name}.pdb" -p2 "${pdb_file_extracted}" -o "${prefix}" -m -ac -t ; } 2> "${prefix}_time.log"
     echo -e "FATCAT COMMAND: FATCAT -p1 ${protein_name}.pdb -p2 $pdb_file_extracted -o ${prefix} -m -ac -t"
     echo -e "POST FATCAT DIR CONETNETS"
     ls
+
+    duration_sec=$(grep "Elapsed (wall clock) time" "${prefix}_time.log" | awk '{split($5,t,":"); if (length(t)==3) sec=t[1]*3600+t[2]*60+t[3]; else sec=t[1]*60+t[2]; print sec}')
+    max_mem=$(grep "Maximum resident set size" "${prefix}_time.log" | awk '{print $6}')
+
+    echo -e "Duration (sec): ${duration_sec}, Max memory (KB): ${max_mem}"
+
+    row_total_duration=$(echo "$row_total_duration + $duration_sec" | bc)
+    if [ "$max_mem" -gt "$row_max_memory" ]; then
+        row_max_memory=$max_mem
+    fi
             
     mv "${protein_name}_${target_name}"* "${output_base_dir}/alignments"   
     echo -e "mv ${protein_name}_${target_name}* ${output_base_dir}/alignments"        
@@ -68,6 +85,11 @@ for ((j=0; j<${#files[@]}; j++)); do
 
     pvalues+="$pvalue "
 done
+
+#memory and duration stats
+echo "" >> "$row_csv"
+echo "row_total_duration_sec,row_max_memory_kb" >> "$row_csv"
+echo "${row_total_duration},${row_max_memory}" >> "$row_csv"
 
 #row output
 echo "$protein_name $pvalues" > "${output_base_dir}/rows/row_${row_id}.txt"
