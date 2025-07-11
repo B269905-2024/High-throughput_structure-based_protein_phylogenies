@@ -50,10 +50,10 @@ for ((j=0; j<${#files[@]}; j++)); do
     ls
             
     mv "${protein_name}_${target_name}"* "${output_base_dir}/alignments"   
-    echo -e "mv ${protein_name}_${target_name}* ${output_base_dir}"        
-    raw_score=$(grep -oP "Score \K[\d.]+" "${output_base_dir}/${prefix}.aln" || echo "Nan")
-    pvalue=$(grep -oP "P-value \K[\d.e+-]+" "${output_base_dir}/${prefix}.aln" || echo "Nan")
-    aln_len=$(grep -oP "align-len \K[\d.e+-]+" "${output_base_dir}/${prefix}.aln" || echo "Nan")
+    echo -e "mv ${protein_name}_${target_name}* ${output_base_dir}/alignments"        
+    raw_score=$(grep -oP "Score \K[\d.]+" "${output_base_dir}/alignments/${prefix}.aln" || echo "Nan")
+    pvalue=$(grep -oP "P-value \K[\d.e+-]+" "${output_base_dir}/alignments/${prefix}.aln" || echo "Nan")
+    aln_len=$(grep -oP "align-len \K[\d.e+-]+" "${output_base_dir}/alignments/${prefix}.aln" || echo "Nan")
 
     echo "raw score: ${raw_score}, p-value: ${pvalue}, alignment: ${aln_len}"
     rm -fr "${protein_name}.pdb" "${pdb_file_extracted}"
