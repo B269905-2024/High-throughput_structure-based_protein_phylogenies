@@ -4,8 +4,8 @@
 #$ -t 1-10                                #num of tasks
 #$ -l h_rt=01:00:00                       #max duration
 #$ -l h_vmem=2G                           #request memory
-#$ -o /exports/eddie/scratch/s2713107/p_value_mat_par/logs/output_yerba3_$TASK_ID.log #outputs
-#$ -e /exports/eddie/scratch/s2713107/p_value_mat_par/logs/error_yerba3_$TASK_ID.log  #error outputs
+#$ -o /exports/eddie/scratch/s2713107/p_value_mat_par/logs/output_yerba5_$TASK_ID.log #outputs
+#$ -e /exports/eddie/scratch/s2713107/p_value_mat_par/logs/error_yerba5_$TASK_ID.log  #error outputs
 #$ -m bea                              #notifications
 #$ -M s2713107@ed.ac.uk                #email
 

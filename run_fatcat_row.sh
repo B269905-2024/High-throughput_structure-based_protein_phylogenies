@@ -16,6 +16,10 @@ protein_name=$(awk -v id="$row_id" '$1 == id {print $2}' "$protein_ids")
 
 echo "running row $row_idx ($protein_name)"
 
+csv_output="${output_base_dir}/csvs/alignment_results.csv"
+echo "protein_1,protein2,raw_score,p_value,aln_len" > "$csv_output"
+
+
 #loop over all proteins
 pvalues=""
 for ((j=0; j<${#files[@]}; j++)); do
@@ -29,7 +33,7 @@ for ((j=0; j<${#files[@]}; j++)); do
     echo -e "does pdb exist?"
     ls -l "${input_dir}/${protein_name}.pdb"
     echo -e "\n header"
-    cat "${input_dir}/${protein_name}.pdb" | head -5
+    #cat "${input_dir}/${protein_name}.pdb" | head -5
     
 
 # Run FATCAT alignment
@@ -54,6 +58,7 @@ for ((j=0; j<${#files[@]}; j++)); do
     raw_score=$(grep -oP "Score \K[\d.]+" "${output_base_dir}/alignments/${prefix}.aln" || echo "Nan")
     pvalue=$(grep -oP "P-value \K[\d.e+-]+" "${output_base_dir}/alignments/${prefix}.aln" || echo "Nan")
     aln_len=$(grep -oP "align-len \K[\d.e+-]+" "${output_base_dir}/alignments/${prefix}.aln" || echo "Nan")
+    echo "${protein_name},${target_name},${raw_score},${pvalue},${aln_len}" >> "$csv_output"
 
     echo "raw score: ${raw_score}, p-value: ${pvalue}, alignment: ${aln_len}"
     rm -fr "${protein_name}.pdb" "${pdb_file_extracted}"
@@ -66,9 +71,6 @@ done
 
 #row output
 echo "$protein_name $pvalues" > "${output_base_dir}/rows/row_${row_id}.txt"
-
-#csv output
-echo "$protein_name,$(echo $pvalues | tr ' ' ',')" > "${output_base_dir}/csvs/row_${row_id}.csv"
 
 echo "Row $row_id done: ${output_base_dir}/rows/row_${row_id}.txt"
 
