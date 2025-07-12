@@ -1,12 +1,12 @@
 #!/bin/bash
 #$ -N array_test_10                #job name
 #$ -cwd                                   #run in current dir
-#$ -t 1-10                                #num of tasks
-#$ -l h_rt=01:00:00                       #max duration
-#$ -l h_vmem=2G                           #request memory
-#$ -o /exports/eddie/scratch/s2713107/p_value_mat_par/logs/output_yerba9_$TASK_ID.log #outputs
-#$ -e /exports/eddie/scratch/s2713107/p_value_mat_par/logs/error_yerba9_$TASK_ID.log  #error outputs
-#$ -m bea                              #notifications
+#$ -t 1-457                                #num of tasks
+#$ -l h_rt=03:00:00                       #max duration
+#$ -l h_vmem=8G                           #request memory
+#$ -o /exports/eddie/scratch/s2713107/p_value_mat_par/logs/output__mmycoides_yerba_$TASK_ID.log #outputs
+#$ -e /exports/eddie/scratch/s2713107/p_value_mat_par/logs/error__mmycoidesyerba__$TASK_ID.log  #error outputs
+#$ -m a                               #notifications
 #$ -M s2713107@ed.ac.uk                #email
 
 #module and enviroment
@@ -15,11 +15,13 @@ module load anaconda
 conda activate /exports/eddie/scratch/s2713107/envs/fatcat
 
 #input dir
-input_dir="/exports/eddie/scratch/s2713107/10_pdb_subset"
+#input_dir="/exports/eddie/scratch/s2713107/10_pdb_subset"
+input_dir="/exports/eddie/scratch/s2713107/JCVI-syn3A_unrelaxed_pdbs"
 folder_name="${input_dir##*/}"
 
 #create job id
-job_id=$(date +"%d%m%H%M")
+#job_id=$(date +"%d%m%H%M")
+job_id=$(date +"%d%m%H")
 
 #output dirs
 output_base_dir="/exports/eddie/scratch/s2713107/p_value_mat_par/${folder_name}_${job_id}"
