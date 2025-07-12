@@ -4,7 +4,9 @@ job_id=$1
 output_base_dir=$2
 
 #inputs
-input_dir="/exports/eddie/scratch/s2713107/10_pdb_subset"
+#input_dir="/exports/eddie/scratch/s2713107/10_pdb_subset"
+input_dir="/exports/eddie/scratch/s2713107/JCVI-syn3A_unrelaxed_pdbs"
+
 protein_ids="protein_IDs.txt"
 files=("$input_dir"/*.pdb)
 
@@ -18,7 +20,7 @@ echo "running row $row_idx ($protein_name)"
 
 csv_output="${output_base_dir}/csvs/alignment_results.csv" #raw score, p value, aln len
 row_csv="${output_base_dir}/csvs/row_${row_id}_duration_memory.csv" #memory and duration
-echo "protein_1,protein2,raw_score,p_value,aln_len" > "$csv_output"
+echo "protein_1,protein2,raw_score,p_value,aln_len,duration,max_memory" > "$csv_output"
 
 #memory and usage
 row_total_duration=0
@@ -100,7 +102,7 @@ for ((j=0; j<${#files[@]}; j++)); do
     raw_score=$(grep -oP "Score \K[\d.]+" "${output_base_dir}/alignments/${prefix}.aln" || echo "Nan")
     pvalue=$(grep -oP "P-value \K[\d.e+-]+" "${output_base_dir}/alignments/${prefix}.aln" || echo "Nan")
     aln_len=$(grep -oP "align-len \K[\d.e+-]+" "${output_base_dir}/alignments/${prefix}.aln" || echo "Nan")
-    echo "${protein_name},${target_name},${raw_score},${pvalue},${aln_len}" >> "$csv_output"
+    echo "${protein_name},${target_name},${raw_score},${pvalue},${aln_len},${duration_sec},${row_max_memory}" >> "$csv_output"
 
     echo "raw score: ${raw_score}, p-value: ${pvalue}, alignment: ${aln_len}"
     rm -fr "${protein_name}.pdb" "${pdb_file_extracted}"
@@ -112,9 +114,9 @@ for ((j=0; j<${#files[@]}; j++)); do
 done
 
 #memory and duration stats
-echo "" >> "$row_csv"
-echo "row_total_duration_sec,row_max_memory_kb" >> "$row_csv"
-echo "${row_total_duration},${row_max_memory}" >> "$row_csv"
+#echo "" >> "$row_csv"
+#echo "row_total_duration_sec,row_max_memory_kb" >> "$row_csv"
+#echo "${row_total_duration},${row_max_memory}" >> "$row_csv"
 
 #row output
 echo "$protein_name $pvalues" > "${output_base_dir}/rows/row_${row_id}.txt"

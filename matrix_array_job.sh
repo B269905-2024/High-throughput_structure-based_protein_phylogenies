@@ -4,8 +4,8 @@
 #$ -t 1-457                                #num of tasks
 #$ -l h_rt=03:00:00                       #max duration
 #$ -l h_vmem=8G                           #request memory
-#$ -o /exports/eddie/scratch/s2713107/p_value_mat_par/logs/output__mmycoides_yerba_$TASK_ID.log #outputs
-#$ -e /exports/eddie/scratch/s2713107/p_value_mat_par/logs/error__mmycoidesyerba__$TASK_ID.log  #error outputs
+#$ -o /exports/eddie/scratch/s2713107/p_value_mat_par/logs/output_coffe_$TASK_ID.log #outputs
+#$ -e /exports/eddie/scratch/s2713107/p_value_mat_par/logs/error_coffe_$TASK_ID.log  #error outputs
 #$ -m a                               #notifications
 #$ -M s2713107@ed.ac.uk                #email
 
@@ -21,7 +21,7 @@ folder_name="${input_dir##*/}"
 
 #create job id
 #job_id=$(date +"%d%m%H%M")
-job_id=$(date +"%d%m%H")
+job_id=$("mycoides"+ date +"%d%m%H")
 
 #output dirs
 output_base_dir="/exports/eddie/scratch/s2713107/p_value_mat_par/${folder_name}_${job_id}"
