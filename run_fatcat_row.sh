@@ -59,17 +59,42 @@ for ((j=0; j<${#files[@]}; j++)); do
     echo -e "FATCAT COMMAND: FATCAT -p1 ${protein_name}.pdb -p2 $pdb_file_extracted -o ${prefix} -m -ac -t"
     echo -e "POST FATCAT DIR CONETNETS"
     ls
+##############################################
+#    duration_sec=$(grep "Elapsed (wall clock) time" "${prefix}_time.log" | awk '{split($5,t,":"); if (length(t)==3) sec=t[1]*3600+t[2]*60+t[3]; else sec=t[1]*60+t[2]; print sec}')
+ #   max_mem=$(grep "Maximum resident set size" "${prefix}_time.log" | awk '{print $6}')
 
-    duration_sec=$(grep "Elapsed (wall clock) time" "${prefix}_time.log" | awk '{split($5,t,":"); if (length(t)==3) sec=t[1]*3600+t[2]*60+t[3]; else sec=t[1]*60+t[2]; print sec}')
+  #  echo -e "Duration (sec): ${duration_sec}, Max memory (KB): ${max_mem}"
+
+   # row_total_duration=$(echo "$row_total_duration + $duration_sec" | bc)
+    #if [ "$max_mem" -gt "$row_max_memory" ]; then
+    #    row_max_memory=$max_mem
+   # fi
+
+
+    duration_str=$(grep "Elapsed (wall clock) time" "${prefix}_time.log" | awk -F': ' '{print $2}')
+    duration_sec=$(echo "$duration_str" | awk -F: '{
+    if (NF==3) sec=$1*3600+$2*60+$3;
+    else if (NF==2) sec=$1*60+$2;
+    else sec=$1;
+    print sec
+    }')
     max_mem=$(grep "Maximum resident set size" "${prefix}_time.log" | awk '{print $6}')
 
     echo -e "Duration (sec): ${duration_sec}, Max memory (KB): ${max_mem}"
 
-    row_total_duration=$(echo "$row_total_duration + $duration_sec" | bc)
-    if [ "$max_mem" -gt "$row_max_memory" ]; then
-        row_max_memory=$max_mem
+    if [ -n "$duration_sec" ]; then
+	    row_total_duration=$(echo "$row_total_duration + $duration_sec" | bc)
     fi
+
+    if [ -n "$max_mem" ]; then
+	    if [ "$max_mem" -gt "$row_max_memory" ]; then
+		    row_max_memory=$max_mem
+	    fi
+    fi
+    echo -e "DEBUG: row max memory = ${row_max_memory}"
+
             
+    #####################
     mv "${protein_name}_${target_name}"* "${output_base_dir}/alignments"   
     echo -e "mv ${protein_name}_${target_name}* ${output_base_dir}/alignments"        
     raw_score=$(grep -oP "Score \K[\d.]+" "${output_base_dir}/alignments/${prefix}.aln" || echo "Nan")
