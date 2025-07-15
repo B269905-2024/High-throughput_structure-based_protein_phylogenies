@@ -1,11 +1,11 @@
 #!/bin/bash
-#$ -N array_test_10                #job name
+#$ -N m_mycoides_array_job                #job name
 #$ -cwd                                   #run in current dir
 #$ -t 1-457                                #num of tasks
-#$ -l h_rt=03:00:00                       #max duration
+#$ -l h_rt=48:00:00                       #max duration
 #$ -l h_vmem=8G                           #request memory
-#$ -o /exports/eddie/scratch/s2713107/p_value_mat_par/logs/output_coffe_$TASK_ID.log #outputs
-#$ -e /exports/eddie/scratch/s2713107/p_value_mat_par/logs/error_coffe_$TASK_ID.log  #error outputs
+#$ -o /exports/eddie/scratch/s2713107/p_value_mat_par/logs/output_matcha_$TASK_ID.log #outputs
+#$ -e /exports/eddie/scratch/s2713107/p_value_mat_par/logs/error_matcha_$TASK_ID.log  #error outputs
 #$ -m a                               #notifications
 #$ -M s2713107@ed.ac.uk                #email
 
@@ -21,7 +21,7 @@ folder_name="${input_dir##*/}"
 
 #create job id
 #job_id=$(date +"%d%m%H%M")
-job_id=$("mycoides"+ date +"%d%m%H")
+job_id=$(date +"%d%m")
 
 #output dirs
 output_base_dir="/exports/eddie/scratch/s2713107/p_value_mat_par/${folder_name}_${job_id}"
