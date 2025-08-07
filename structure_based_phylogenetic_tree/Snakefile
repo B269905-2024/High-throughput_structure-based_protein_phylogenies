@@ -1,0 +1,34 @@
+import os
+configfile: "config.yaml" #config_anonimised.yaml has to be updated with exisiting s number to run
+
+rule all:
+    input:
+        config["newick"]
+
+rule run_fatcat_alignment:
+    output:
+        matrix=config["matrix_raw"]
+    shell:
+        """
+        bash {config['fatcat_script']} #script called from config file to not hard code input dir
+        cp $(dirname $(find {config['output_base']} -name "pvalue_matrix_ID*.tsv" | sort | tail -1))/*.tsv {config['matrix_raw']}
+        """
+
+rule clean_matrix:
+    input:
+        config["matrix_raw"]
+    output:
+        config["matrix_clean"]
+    script:
+        "scripts/identify_nans.py"
+
+rule convert_to_phylip_and_tree:
+    input:
+        config["matrix_clean"]
+    output:
+        config["newick"]
+    shell:
+        """
+        bash scripts/tsv_to_phylip.sh
+        """
+
