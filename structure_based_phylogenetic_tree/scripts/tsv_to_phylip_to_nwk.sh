@@ -33,8 +33,13 @@ done
 #!/bin/bash
 
 ########tsv to phylip
-input_file="full_p_value_JCVI_no_nan.tsv"
-output_file="full_p_value_JCVI_no_nan.phylip"
+#input_file="full_p_value_JCVI_no_nan.tsv"
+#output_file="full_p_value_JCVI_no_nan.phylip"
+
+input_file="$1"
+output_file="$2"
+tree_file="$3"
+
 
 #num proteins
 read -r header < "$input_file"
@@ -61,7 +66,7 @@ done
 
 
 ##########make a tree
-quicktree -in m "$output_file" > "/exports/eddie/scratch/sxxxxxx/p_value_mat/full_p_value_JCVI_no_nan.nwk"
+quicktree -in m "$output_file" > "$tree_file"
 
 #quicktree -in m full_p_value_JCVI_no_nan.phylip > full_p_value_JCVI_no_nan.nwk
 

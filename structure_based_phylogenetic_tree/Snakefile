@@ -29,6 +29,5 @@ rule convert_to_phylip_and_tree:
         config["newick"]
     shell:
         """
-        bash scripts/tsv_to_phylip.sh
+        bash scripts/tsv_to_phylip.sh {input} {config[phylip]} {output}
         """
-

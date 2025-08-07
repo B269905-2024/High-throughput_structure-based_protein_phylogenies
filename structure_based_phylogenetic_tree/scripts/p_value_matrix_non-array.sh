@@ -12,7 +12,7 @@
 module load anaconda            
 
 #activate env
-conda activate /exports/eddie/scratch/s2713107/envs/fatcat
+conda activate /exports/eddie/scratch/sxxxxxx/envs/fatcat
 timestamp=$(date +"%H%M%d%m")
 #job_id=$RANDOM_${timestamp}
 job_id="snakemake"
