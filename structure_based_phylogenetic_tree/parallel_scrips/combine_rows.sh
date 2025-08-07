@@ -8,17 +8,17 @@
 #$ -l h_rt=00:30:00             
 #$ -l h_vmem=8G                 
 #$ -m bea                       
-#$ -M s2713107@ed.ac.uk        
+#$ -M sxxxxxx@ed.ac.uk        
 
 #load modules
 . /etc/profile.d/modules.sh     
 module load anaconda           
 
 #dirs
-INPUT_DIR=/exports/eddie/scratch/s2713107/p_value_mat_par/JCVI-syn3A_unrelaxed_pdbs_1507/rows
-MATRIX_FILE="/exports/eddie/scratch/s2713107/p_value_mat_par/JCVI-syn3A_unrelaxed_pdbs_1507/rows/matrix.tsv"
-MISSING_ROWS_FILE="/exports/eddie/scratch/s2713107/p_value_mat_par/JCVI-syn3A_unrelaxed_pdbs_1507/rows/missing_rows.txt"
-NAN_ROWS_FILE="/exports/eddie/scratch/s2713107/p_value_mat_par/JCVI-syn3A_unrelaxed_pdbs_1507/rows/nan_rows.txt"
+INPUT_DIR=/exports/eddie/scratch/sxxxxxx/p_value_mat_par/JCVI-syn3A_unrelaxed_pdbs_1507/rows
+MATRIX_FILE="/exports/eddie/scratch/xxxxxx/p_value_mat_par/JCVI-syn3A_unrelaxed_pdbs_1507/rows/matrix.tsv"
+MISSING_ROWS_FILE="/exports/eddie/scratch/sxxxxxx/p_value_mat_par/JCVI-syn3A_unrelaxed_pdbs_1507/rows/missing_rows.txt"
+NAN_ROWS_FILE="/exports/eddie/scratch/sxxxxx/p_value_mat_par/JCVI-syn3A_unrelaxed_pdbs_1507/rows/nan_rows.txt"
 
 declare -a ROW_NUMBERS
 declare -a ALL_SYN_IDS

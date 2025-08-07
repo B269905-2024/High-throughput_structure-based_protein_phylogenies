@@ -4,8 +4,8 @@ job_id=$1
 output_base_dir=$2
 
 #inputs
-#input_dir="/exports/eddie/scratch/s2713107/10_pdb_subset"
-input_dir="/exports/eddie/scratch/s2713107/JCVI-syn3A_unrelaxed_pdbs"
+#input_dir="/exports/eddie/scratch/sxxxxxx/10_pdb_subset"
+input_dir="/exports/eddie/scratch/sxxxxxx/JCVI-syn3A_unrelaxed_pdbs"
 
 protein_ids="protein_IDs.txt"
 files=("$input_dir"/*.pdb)
