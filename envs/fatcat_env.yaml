@@ -1,0 +1,6 @@
+name: fatcat
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+prefix: /exports/eddie/scratch/s2713107/envs/fatcat

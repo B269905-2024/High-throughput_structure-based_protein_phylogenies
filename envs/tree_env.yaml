@@ -1,0 +1,14 @@
+name: tree_env
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - _libgcc_mutex=0.1
+  - _openmp_mutex=4.5
+  - iqtree=3.0.1
+  - libgcc=15.1.0
+  - libgomp=15.1.0
+  - libstdcxx=15.1.0
+  - quicktree=2.5
+prefix: /exports/eddie/scratch/s2713107/envs/tree_env
