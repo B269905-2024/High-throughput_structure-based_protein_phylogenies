@@ -1,0 +1,8 @@
+output_base: "/exports/eddie/scratch/sxxxxx/p_value_mat"
+input_dir: "/exports/eddie/scratch/sxxxxx/JCVI-syn3A_unrelaxed_pdbs"
+fatcat_script: "scripts/p_value_matrix_non-array.sh"
+matrix_raw: "/exports/eddie/scratch/sxxxxx/p_value_mat/full_p_value_JCVI.tsv"
+matrix_clean: "/exports/eddie/scratch/sxxxxx/p_value_mat/full_p_value_JCVI_no_nan.tsv"
+phylip: "/exports/eddie/scratch/sxxxxx/p_value_mat/full_p_value_JCVI_no_nan.phylip"
+newick: "/exports/eddie/scratch/sxxxxx/p_value_mat/full_p_value_JCVI_no_nan.nwk"
+
