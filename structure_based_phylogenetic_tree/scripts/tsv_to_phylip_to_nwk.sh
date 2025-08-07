@@ -1,7 +1,10 @@
 #!/bin/bash
 
-input_file="full_p_value_JCVI_no_nan.tsv"
-output_file="full_p_value_JCVI_no_nan.phylip"
+input_file="/exports/eddie/scratch/s2713107/p_value_mat/full_p_value_JCVI_no_nan.tsv"
+output_file="/exports/eddie/scratch/s2713107/p_value_mat/full_p_value_JCVI_no_nan.phylip"
+
+#input_file="full_p_value_JCVI_no_nan.tsv"
+#output_file="full_p_value_JCVI_no_nan.phylip"
 
 read -r header < "$input_file"
 num_proteins=$(echo "$header" | awk '{print NF - 1}')
@@ -58,5 +61,7 @@ done
 
 
 ##########make a tree
-quicktree -in m full_p_value_JCVI_no_nan.phylip > full_p_value_JCVI_no_nan.nwk
+quicktree -in m "$output_file" > "/exports/eddie/scratch/sxxxxxx/p_value_mat/full_p_value_JCVI_no_nan.nwk"
+
+#quicktree -in m full_p_value_JCVI_no_nan.phylip > full_p_value_JCVI_no_nan.nwk
 

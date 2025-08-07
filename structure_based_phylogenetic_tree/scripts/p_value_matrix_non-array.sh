@@ -1,11 +1,11 @@
 #!/bin/bash
-
+#usage: ./p_value_matrix_non-array.sh <input_dir> <output_base_dir>
 #$ -N non-parallel              
 #$ -cwd                     
 #$ -l h_rt=76:00:00             
 #$ -l h_vmem=8G                 
 #$ -m bea                       #begin, end, abort
-#$ -M s2713107@ed.ac.uk         
+#$ -M sxxxxxx@ed.ac.uk         
 
 #load modules
 . /etc/profile.d/modules.sh     
@@ -14,13 +14,14 @@ module load anaconda
 #activate env
 conda activate /exports/eddie/scratch/s2713107/envs/fatcat
 timestamp=$(date +"%H%M%d%m")
-job_id=$RANDOM_${timestamp}
+#job_id=$RANDOM_${timestamp}
+job_id="snakemake"
 echo "Job ID: $job_id"
 
 #dirs and paths
-input_dir="/exports/eddie/scratch/s2713107/JCVI-syn3A_unrelaxed_pdbs"
+input_dir="$1"
 folder_name="${input_dir##*/}"
-output_base_dir="/exports/eddie/scratch/s2713107/p_value_mat/non-parallel_${folder_name}_${job_id}"
+output_base_dir="$2"
 output_dir="${output_base_dir}/alignments"
 matrix_dir="${output_base_dir}/matrices"
 log_dir="${output_base_dir}/logs"

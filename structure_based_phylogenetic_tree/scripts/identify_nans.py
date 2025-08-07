@@ -3,8 +3,8 @@ import math
 from collections import defaultdict
 
 ####################identify nans
-file_path = "full_p_value_JCVI.tsv"
-
+#file_path = "full_p_value_JCVI.tsv"
+file_path = snakemake.input[0]
 nan_pairs = []
 
 with open(file_path, newline='') as tsvfile:
@@ -58,8 +58,10 @@ else:
 ####################################remove nans
 
 if halved_counts:
-    input_file = "full_p_value_JCVI.tsv" #this to be changed in the snakemake file
-    output_file = "full_p_value_JCVI_no_nani_test.tsv"
+    input_file = file_path 
+    output_file = snakemake.output[0]
+    #input_file = "full_p_value_JCVI.tsv" #this to be changed in the snakemake file
+    #output_file = "full_p_value_JCVI_no_nani_test.tsv"
 
     with open(input_file, newline='') as f_in, open(output_file, 'w', newline='') as f_out:
         reader = csv.reader(f_in, delimiter='\t')
